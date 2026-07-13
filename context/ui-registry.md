@@ -101,3 +101,63 @@ Last updated: 2026-07-13
 
 **Pattern notes:**
 Footer stays minimal. No buttons, no accent, no card treatment. This is a simple closing line and should remain visually light.
+
+### ContactFormPanel
+
+File: [components/contacts/ContactFormPanel.tsx](../components/contacts/ContactFormPanel.tsx)
+Last updated: 2026-07-13
+
+| Property         | Class |
+| ---------------- | ----- |
+| Background       | `flex flex-col gap-4 rounded-xl border border-border bg-surface p-6 shadow-sm`, `absolute inset-0 z-20 flex items-start justify-center bg-overlay/40 px-6 py-10`, `w-full max-w-2xl rounded-xl border border-border bg-surface p-6 shadow-sm` |
+| Border           | `border border-border` |
+| Border radius    | `rounded-xl` |
+| Text — primary   | `text-text-primary` |
+| Text — secondary | `text-text-secondary` |
+| Spacing          | `p-6`, `gap-4`, `gap-2`, `gap-3`, `mt-6`, `px-4 py-2`, `px-3 py-2`, `px-6 py-10` |
+| Hover state      | `hover:bg-accent-dark`, `hover:bg-surface-secondary` |
+| Shadow           | `shadow-sm` |
+| Accent usage     | `bg-accent`, `text-accent-foreground`, `bg-accent-dark`, `text-success`, `text-error` |
+
+**Pattern notes:**
+This is the page-level add-contact modal. Outer surface stays calm and white, modal overlay uses `bg-overlay/40`, and controls keep the same primary accent button plus neutral secondary action. Input treatment matches the project form token pattern exactly.
+
+### ContactsTable
+
+File: [components/contacts/ContactsTable.tsx](../components/contacts/ContactsTable.tsx)
+Last updated: 2026-07-13
+
+| Property         | Class |
+| ---------------- | ----- |
+| Background       | `bg-surface` |
+| Border           | `border border-border` |
+| Border radius    | `rounded-xl` |
+| Text — primary   | `text-text-primary` |
+| Text — secondary | `text-text-secondary` |
+| Spacing          | `px-4 py-3`, `px-4 py-4` |
+| Hover state      | `hover:bg-surface-secondary` |
+| Shadow           | `shadow-sm` |
+| Accent usage     | `none` |
+
+**Pattern notes:**
+Contacts table follows the project table pattern: white surface, border between rows, uppercase header, hover row highlight, and clickable rows. Future data tables should match this unless a different table style is explicitly needed.
+
+### ContactLimitBanner
+
+File: [components/contacts/ContactLimitBanner.tsx](../components/contacts/ContactLimitBanner.tsx)
+Last updated: 2026-07-13
+
+| Property         | Class |
+| ---------------- | ----- |
+| Background       | `rounded-lg border border-border bg-warning-light p-4` |
+| Border           | `border border-border` |
+| Border radius    | `rounded-lg` |
+| Text — primary   | `none` |
+| Text — secondary | `text-warning-foreground` |
+| Spacing          | `p-4`, `ml-3`, `px-4 py-2` |
+| Hover state      | `hover:bg-accent-dark` |
+| Shadow           | `none` |
+| Accent usage     | `bg-accent`, `text-accent-foreground` |
+
+**Pattern notes:**
+This is a full-state alert, not an empty state. It uses warning background with a single Pro CTA. Keep it visually distinct from cards while still using the normal button language.

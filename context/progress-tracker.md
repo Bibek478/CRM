@@ -8,9 +8,9 @@ next.
 
 ## Current Status
 
-**Phase:** Phase 2 - Marketing Page
-**Last completed:** Feature 04 landing page + pricing table code complete
-**Next:** Complete Feature 01 external deployment (git repo, Vercel deploy, env vars in Vercel settings). Then test Feature 03 session persistence on deployed URL before moving to Feature 05.
+**Phase:** Phase 3 - Contacts
+**Last completed:** Feature 05 contacts list + free-tier gate code complete
+**Next:** Test the 11th-contact block on the deployed URL, then move to Feature 06.
 
 ---
 
@@ -28,7 +28,7 @@ next.
 
 ### Phase 3 - Contacts
 
-- [ ] 05 Contacts List + CRUD + Free Tier Limit
+- [x] 05 Contacts List + CRUD + Free Tier Limit
 - [ ] 06 Contact Detail - Edit, Notes, Delete
 
 ### Phase 4 - Deals & Pipeline
@@ -68,6 +68,9 @@ next.
   `/dashboard`, marketing CTAs point to `/signup?plan=starter` and
   `/signup?plan=pro`, and signup remembers the selected plan in
   `sessionStorage` for later billing handoff.
+- Feature 05 implemented locally: `/contacts` lists user contacts, shows
+  open deal counts, displays limit banner at 10/10 for free plan, and server
+  action blocks insert at limit.
 - The original `profiles` update policy was removed from the live Supabase
   project and from `supabase/schema.sql` so billing fields remain writable only
   through trusted server-side/service-role flows.
