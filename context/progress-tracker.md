@@ -8,9 +8,9 @@ next.
 
 ## Current Status
 
-**Phase:** Phase 3 - Contacts
-**Last completed:** Feature 05 contacts list + free-tier gate code complete
-**Next:** Test the 11th-contact block on the deployed URL, then move to Feature 06.
+**Phase:** Phase 4 - Deals & Pipeline
+**Last completed:** Feature 06 contact detail + notes code complete
+**Next:** Build Feature 07 pipeline board after validating contact detail on deployed URL.
 
 ---
 
@@ -29,7 +29,7 @@ next.
 ### Phase 3 - Contacts
 
 - [x] 05 Contacts List + CRUD + Free Tier Limit
-- [ ] 06 Contact Detail - Edit, Notes, Delete
+- [x] 06 Contact Detail - Edit, Notes, Delete
 
 ### Phase 4 - Deals & Pipeline
 
@@ -71,6 +71,9 @@ next.
 - Feature 05 implemented locally: `/contacts` lists user contacts, shows
   open deal counts, displays limit banner at 10/10 for free plan, and server
   action blocks insert at limit.
+- Feature 06 implemented locally: `/contacts/[id]` now edits contact fields,
+  shows linked deals, supports contact notes with delete, and contact delete
+  relies on DB cascade for linked deals and notes.
 - The original `profiles` update policy was removed from the live Supabase
   project and from `supabase/schema.sql` so billing fields remain writable only
   through trusted server-side/service-role flows.

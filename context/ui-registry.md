@@ -161,3 +161,83 @@ Last updated: 2026-07-13
 
 **Pattern notes:**
 This is a full-state alert, not an empty state. It uses warning background with a single Pro CTA. Keep it visually distinct from cards while still using the normal button language.
+
+### ContactDetailForm
+
+File: [components/contacts/ContactDetailForm.tsx](../components/contacts/ContactDetailForm.tsx)
+Last updated: 2026-07-14
+
+| Property         | Class |
+| ---------------- | ----- |
+| Background       | `none` |
+| Border           | `none` |
+| Border radius    | `none` |
+| Text — primary   | `text-text-primary` |
+| Text — secondary | `text-text-secondary` |
+| Spacing          | `flex flex-col gap-4`, `grid gap-4`, `px-3 py-2`, `gap-2`, `gap-3` |
+| Hover state      | `hover:bg-accent-dark` |
+| Shadow           | `none` |
+| Accent usage     | `bg-accent`, `text-accent-foreground`, `text-error`, `text-success` |
+
+**Pattern notes:**
+This is the editable contact fields form. It stays structurally simple and inherits the shared input pattern exactly, with one primary save button and no extra chrome.
+
+### DeleteContactButton
+
+File: [components/contacts/DeleteContactButton.tsx](../components/contacts/DeleteContactButton.tsx)
+Last updated: 2026-07-14
+
+| Property         | Class |
+| ---------------- | ----- |
+| Background       | `none` |
+| Border           | `none` |
+| Border radius    | `rounded-md` |
+| Text — primary   | `text-error-foreground` |
+| Text — secondary | `text-error` |
+| Spacing          | `px-4 py-2` |
+| Hover state      | `hover:opacity-90` |
+| Shadow           | `none` |
+| Accent usage     | `bg-error`, `text-error-foreground` |
+
+**Pattern notes:**
+Destructive action stays explicit and red, with browser confirm before submit. Future destructive buttons should match this direct, high-clarity pattern.
+
+### NoteInput
+
+File: [components/shared/NoteInput.tsx](../components/shared/NoteInput.tsx)
+Last updated: 2026-07-14
+
+| Property         | Class |
+| ---------------- | ----- |
+| Background       | `rounded-lg border border-border bg-surface p-4 shadow-sm` |
+| Border           | `border border-border` |
+| Border radius    | `rounded-lg` |
+| Text — primary   | `text-text-primary` |
+| Text — secondary | `text-text-muted` |
+| Spacing          | `gap-3`, `p-4`, `px-3 py-2`, `px-4 py-2` |
+| Hover state      | `hover:bg-accent-dark` |
+| Shadow           | `shadow-sm` |
+| Accent usage     | `bg-accent`, `text-accent-foreground`, `text-error` |
+
+**Pattern notes:**
+Note input is a compact card-style composer. It uses the standard input token set and a single primary action, with the textarea as the only content entry point.
+
+### NotesList
+
+File: [components/shared/NotesList.tsx](../components/shared/NotesList.tsx)
+Last updated: 2026-07-14
+
+| Property         | Class |
+| ---------------- | ----- |
+| Background       | `bg-surface` |
+| Border           | `border border-border` |
+| Border radius    | `rounded-lg` |
+| Text — primary   | `text-text-primary` |
+| Text — secondary | `text-text-muted` |
+| Spacing          | `gap-3`, `p-4`, `px-3 py-1.5` |
+| Hover state      | `hover:bg-surface-secondary` |
+| Shadow           | `none` |
+| Accent usage     | `text-error` |
+
+**Pattern notes:**
+Each note is a compact bordered card with a small destructive action. Keep notes visually lighter than primary contact cards and preserve newest-first ordering.
