@@ -241,3 +241,63 @@ Last updated: 2026-07-14
 
 **Pattern notes:**
 Each note is a compact bordered card with a small destructive action. Keep notes visually lighter than primary contact cards and preserve newest-first ordering.
+
+### DealCard
+
+File: [components/dashboard/DealCard.tsx](../components/dashboard/DealCard.tsx)
+Last updated: 2026-07-14
+
+| Property         | Class |
+| ---------------- | ----- |
+| Background       | `bg-surface` |
+| Border           | `border border-border border-l-4` + `style={{ borderLeftColor }}` via CSS var |
+| Border radius    | `rounded-lg` |
+| Text — primary   | `text-text-primary` |
+| Text — secondary | `text-text-muted` |
+| Spacing          | `p-4`, `gap-3`, `px-3 py-1.5` |
+| Hover state      | `hover:text-accent` (deal name link) |
+| Shadow           | `shadow-sm` |
+| Accent usage     | `focus:ring-accent`, `focus:border-accent`, `text-accent` |
+
+**Pattern notes:**
+Left border color set via `style={{ borderLeftColor: "var(--color-...)" }}` — never dynamic Tailwind arbitrary classes. Stage `<select>` is **controlled** (`value={selectedStage}`) with local state; resets automatically when server re-renders new `deal.stage` and on action failure. Auto-submits via `requestSubmit()` on change. Deal name is a Next.js `<Link>` to `/deals/[id]`.
+
+### PipelineColumn
+
+File: [components/dashboard/PipelineColumn.tsx](../components/dashboard/PipelineColumn.tsx)
+Last updated: 2026-07-14
+
+| Property         | Class |
+| ---------------- | ----- |
+| Background       | `bg-surface-muted` |
+| Border           | `border border-border` |
+| Border radius    | `rounded-xl` |
+| Text — primary   | `text-text-primary` |
+| Text — secondary | `text-text-secondary`, `text-text-muted` |
+| Spacing          | `gap-3`, `gap-2`, `p-2`, `px-1`, `px-2 py-0.5`, `py-8` |
+| Hover state      | none |
+| Shadow           | none |
+| Accent usage     | none |
+
+**Pattern notes:**
+Stage dot color set via `style={{ backgroundColor: "var(--color-...)" }}` — never dynamic Tailwind bg classes. Deal count badge uses `bg-surface-secondary`. Column is a muted background container. Empty state is a centred `py-8` message inside the column body.
+
+### PipelineBoard
+
+File: [components/dashboard/PipelineBoard.tsx](../components/dashboard/PipelineBoard.tsx)
+Last updated: 2026-07-14
+
+| Property         | Class |
+| ---------------- | ----- |
+| Background       | `bg-surface` (modal) |
+| Border           | `border border-border` |
+| Border radius    | `rounded-xl` |
+| Text — primary   | `text-text-primary` |
+| Text — secondary | `text-text-muted` |
+| Spacing          | `gap-6`, `gap-4`, `gap-3`, `gap-2`, `p-6`, `px-4 py-2`, `px-3 py-2`, `py-10`, `pb-4`, `pt-2` |
+| Hover state      | `hover:bg-accent-dark`, `hover:bg-surface-secondary`, `hover:text-text-primary` |
+| Shadow           | `shadow-sm` |
+| Accent usage     | `bg-accent`, `text-accent-foreground`, `bg-accent-dark`, `focus:ring-accent`, `text-accent` |
+
+**Pattern notes:**
+New Deal modal uses the same overlay pattern as ContactFormPanel (`bg-overlay/40`, click-outside to close). Board uses `overflow-x-auto` with `min-w-[220px]` columns so it scrolls horizontally on narrow viewports rather than stacking. All five stage columns always render; empty state lives inside each column.

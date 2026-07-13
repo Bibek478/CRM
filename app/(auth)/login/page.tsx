@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { AuthForm } from "@/components/auth/AuthForm";
@@ -28,7 +29,9 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
           </p>
         }
       >
-        <AuthForm mode="login" />
+        <Suspense fallback={null}>
+          <AuthForm mode="login" />
+        </Suspense>
       </AuthCard>
     </main>
   );

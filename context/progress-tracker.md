@@ -9,8 +9,8 @@ next.
 ## Current Status
 
 **Phase:** Phase 4 - Deals & Pipeline
-**Last completed:** Feature 06 contact detail + notes code complete
-**Next:** Build Feature 07 pipeline board after validating contact detail on deployed URL.
+**Last completed:** Feature 07 pipeline board code complete
+**Next:** Build Feature 08 deal detail after validating pipeline board on deployed URL.
 
 ---
 
@@ -33,7 +33,7 @@ next.
 
 ### Phase 4 - Deals & Pipeline
 
-- [ ] 07 Pipeline Board (Dashboard)
+- [x] 07 Pipeline Board (Dashboard)
 - [ ] 08 Deal Detail - Edit, Notes, Delete
 
 ### Phase 5 - Stripe & Billing
@@ -83,3 +83,10 @@ next.
   `/deals/*`, `/billing` and redirects unauth to `/login`. `components/layout/Navbar.tsx`
   displays nav items with active state, user email, and LogoutButton. Session
   persistence test pending until Feature 01 deployment completes.
+- Feature 07 implemented locally: `/dashboard` is now a 5-column pipeline board.
+  `PipelineBoard` client component handles the New Deal modal (contact picker, name,
+  value, stage). `DealCard` shows name, contact, value, and a stage `<select>` that
+  auto-submits `updateDealStage`. `PipelineColumn` renders column header with stage
+  dot, count badge, and empty state. `actions/deals.ts` includes `createDeal`,
+  `updateDealStage`, plus `updateDeal`/`deleteDeal` stubs ready for Feature 08.
+
