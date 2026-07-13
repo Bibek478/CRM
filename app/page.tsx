@@ -1,41 +1,55 @@
-export default function HomePage() {
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import { Features } from "@/components/marketing/Features";
+import { Footer } from "@/components/marketing/Footer";
+import { Hero } from "@/components/marketing/Hero";
+import { PricingTable } from "@/components/marketing/PricingTable";
+import { createSupabaseServer } from "@/lib/supabase-server";
+
+export default async function HomePage() {
+  const supabase = await createSupabaseServer();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    redirect("/dashboard");
+  }
+
   return (
-    <main className="flex min-h-screen items-center justify-center px-6 py-10">
-      <section className="w-full max-w-3xl rounded-xl border border-border bg-surface p-6 shadow-sm">
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-wrap items-center gap-3">
+    <main className="min-h-screen">
+      <div className="border-b border-border bg-surface">
+        <header className="mx-auto flex h-16 max-w-300 items-center justify-between px-6">
+          <div className="flex items-center gap-3">
+            <span className="text-lg font-bold text-text-primary">RB CRM</span>
             <span className="rounded-full bg-accent-muted px-3 py-1 text-xs font-medium text-accent-dark">
-              Feature 01 Foundation
-            </span>
-            <span className="text-sm text-text-secondary">
-              Next.js 16, TypeScript strict, Tailwind v4
+              Freelance CRM
             </span>
           </div>
 
-          <div className="flex flex-col gap-3">
-            <h1 className="text-2xl font-semibold text-text-primary">
-              RB CRM skeleton is in place.
-            </h1>
-            <p className="max-w-2xl text-sm text-text-secondary">
-              This placeholder homepage exists only to give the project a clean
-              deployed base. The real marketing page, auth flow, data model,
-              and billing features are intentionally left for later features.
-            </p>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/login"
+              className="rounded-md border border-border px-4 py-2 text-sm font-medium text-text-primary transition hover:bg-surface-secondary"
+            >
+              Log in
+            </Link>
+            <Link
+              href="/signup"
+              className="rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition hover:bg-accent-dark"
+            >
+              Sign up
+            </Link>
           </div>
+        </header>
+      </div>
 
-          <div className="rounded-lg border border-border bg-surface-secondary p-4">
-            <p className="text-sm font-medium text-text-primary">
-              Current scope
-            </p>
-            <p className="mt-2 text-sm text-text-secondary">
-              Root layout and typography are aligned with project standards,
-              design tokens are loaded globally, and the app is ready for the
-              next feature once deployment hookup is completed outside this
-              workspace.
-            </p>
-          </div>
-        </div>
-      </section>
+      <div className="mx-auto flex w-full max-w-300 flex-col gap-8 px-6 py-6">
+        <Hero />
+        <Features />
+        <PricingTable />
+        <Footer />
+      </div>
     </main>
   );
 }

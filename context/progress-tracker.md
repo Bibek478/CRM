@@ -8,9 +8,9 @@ next.
 
 ## Current Status
 
-**Phase:** Phase 1 - Foundation
-**Last completed:** Feature 03 code complete (middleware, navbar wired)
-**Next:** Complete Feature 01 external deployment (git repo, Vercel deploy, env vars in Vercel settings). Then test Feature 03 session persistence on deployed URL before marking done.
+**Phase:** Phase 2 - Marketing Page
+**Last completed:** Feature 04 landing page + pricing table code complete
+**Next:** Complete Feature 01 external deployment (git repo, Vercel deploy, env vars in Vercel settings). Then test Feature 03 session persistence on deployed URL before moving to Feature 05.
 
 ---
 
@@ -24,7 +24,7 @@ next.
 
 ### Phase 2 - Marketing Page
 
-- [ ] 04 Landing Page + Pricing Table
+- [x] 04 Landing Page + Pricing Table
 
 ### Phase 3 - Contacts
 
@@ -64,6 +64,10 @@ next.
   of it.
 - Public GitHub/Vercel deployment is still pending because git initialization
   was intentionally skipped in this session.
+- Feature 04 is now implemented locally: logged-in users on `/` redirect to
+  `/dashboard`, marketing CTAs point to `/signup?plan=starter` and
+  `/signup?plan=pro`, and signup remembers the selected plan in
+  `sessionStorage` for later billing handoff.
 - The original `profiles` update policy was removed from the live Supabase
   project and from `supabase/schema.sql` so billing fields remain writable only
   through trusted server-side/service-role flows.

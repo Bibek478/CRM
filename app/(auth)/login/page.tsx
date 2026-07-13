@@ -2,7 +2,15 @@ import Link from "next/link";
 import { AuthCard } from "@/components/auth/AuthCard";
 import { AuthForm } from "@/components/auth/AuthForm";
 
-export default function LoginPage() {
+type LoginPageProps = {
+  searchParams?: {
+    plan?: string;
+  };
+};
+
+export default function LoginPage({ searchParams }: LoginPageProps) {
+  const selectedPlan = searchParams?.plan === "pro" ? "pro" : "starter";
+
   return (
     <main className="flex min-h-screen items-center justify-center px-6 py-10">
       <AuthCard
@@ -12,7 +20,7 @@ export default function LoginPage() {
           <p>
             No account yet?{" "}
             <Link
-              href="/signup"
+              href={`/signup?plan=${selectedPlan}`}
               className="font-medium text-accent transition hover:text-accent-dark"
             >
               Sign up

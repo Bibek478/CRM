@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase-client";
 
 type AuthMode = "login" | "signup";
+type SignupPlan = "starter" | "pro";
 
 type Props = {
   mode: AuthMode;
@@ -42,6 +43,7 @@ const getAuthErrorMessage = (message: string) => {
 
 export function AuthForm({ mode }: Props) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const isLogin = mode === "login";
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -49,6 +51,8 @@ export function AuthForm({ mode }: Props) {
   const [message, setMessage] = useState<string | null>(null);
   const [pendingAction, setPendingAction] = useState<PendingAction>(null);
 
+  const selectedPlan: SignupPlan = searchParams.get("plan") === "pro" ? "pro" : "starter";
+  const selectedPlanLabel = selectedPlan === "pro" ? "Pro" : "Starter";
   const isPending = pendingAction !== null;
 
   const handleCredentialsSubmit = async (
@@ -84,11 +88,17 @@ export function AuthForm({ mode }: Props) {
       }
 
       if (!isLogin && !result.data.session) {
-        setMessage("Account created. Check your email, then log in.");
+        setMessage(
+          selectedPlan === "pro"
+            ? "Account created. Check your email, then log in with Pro selected to continue to billing."
+            : "Account created. Check your email, then log in.",
+        );
         return;
       }
 
-      router.replace("/dashboard");
+      const nextPath = selectedPlan === "pro" ? "/billing?plan=pro" : "/dashboard";
+
+      router.replace(nextPath);
       router.refresh();
     } catch (submitError) {
       console.error("[components/auth/AuthForm]", submitError);
@@ -159,6 +169,12 @@ export function AuthForm({ mode }: Props) {
 
   return (
     <div className="flex flex-col gap-4">
+      {!isLogin ? (
+        <div className="rounded-lg border border-border bg-surface-secondary px-3 py-2 text-sm text-text-secondary">
+          Selected plan: <span className="font-medium text-text-primary">{selectedPlanLabel}</span>
+        </div>
+      ) : null}
+
       <form className="flex flex-col gap-4" onSubmit={handleCredentialsSubmit}>
         <div className={fieldClassName}>
           <label className={labelClassName} htmlFor={`${mode}-email`}>
