@@ -18,13 +18,26 @@ export default async function BillingPage() {
 
   if (!user) redirect("/login");
 
-  const { data: profile, error } = await supabase
-    .from("profiles")
-    .select("plan, subscription_status, current_period_end")
-    .eq("id", user.id)
-    .single();
+  const [profileResult, countResult] = await Promise.all([
+    supabase
+      .from("profiles")
+      .select("plan, subscription_status, current_period_end")
+      .eq("id", user.id)
+      .single(),
+    supabase
+      .from("contacts")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", user.id),
+  ]);
 
-  if (error || !profile) redirect("/login");
+  if (profileResult.error || !profileResult.data) redirect("/login");
+
+  if (countResult.error) {
+    console.error("[billing/page] contact count query failed", countResult.error);
+  }
+
+  const profile = profileResult.data;
+  const contactCount = countResult.count ?? 0;
 
   return (
     <main className="mx-auto max-w-[1200px] px-6 py-6">
@@ -35,6 +48,7 @@ export default async function BillingPage() {
           plan={profile.plan ?? "free"}
           subscriptionStatus={profile.subscription_status ?? "none"}
           currentPeriodEnd={profile.current_period_end ?? null}
+          contactCount={contactCount}
         />
       </div>
     </main>

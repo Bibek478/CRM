@@ -100,15 +100,10 @@ export default async function ContactDetailPage({ params }: PageProps) {
       <main className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-6 py-10">
         <section className="flex flex-col gap-6 rounded-xl border border-border bg-surface p-6 shadow-sm">
           <div className="flex flex-col gap-2">
-            <span className="rounded-full bg-accent-muted px-3 py-1 text-xs font-medium text-accent-dark">
-              Feature 06 Contact Detail
-            </span>
-            <div className="flex flex-col gap-2">
-              <h1 className="text-2xl font-semibold text-text-primary">{contact.name}</h1>
-              <p className="text-sm text-text-secondary">
-                Edit contact details, review linked deals, and keep timestamped notes.
-              </p>
-            </div>
+            <h1 className="text-2xl font-semibold text-text-primary">{contact.name}</h1>
+            <p className="text-sm text-text-secondary">
+              Edit contact details, review linked deals, and keep timestamped notes.
+            </p>
           </div>
 
           <div className="grid gap-6">

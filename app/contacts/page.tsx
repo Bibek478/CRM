@@ -79,15 +79,10 @@ export default async function ContactsPage() {
       <main className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-6 py-10">
         <section className="flex flex-col gap-6 rounded-xl border border-border bg-surface p-6 shadow-sm">
           <div className="flex flex-col gap-2">
-            <span className="rounded-full bg-accent-muted px-3 py-1 text-xs font-medium text-accent-dark">
-              Feature 05 Contacts
-            </span>
-            <div className="flex flex-col gap-2">
-              <h1 className="text-2xl font-semibold text-text-primary">Contacts</h1>
-              <p className="text-sm text-text-secondary">
-                Keep every client detail in one table. Open deal count excludes won and lost deals.
-              </p>
-            </div>
+            <h1 className="text-2xl font-semibold text-text-primary">Contacts</h1>
+            <p className="text-sm text-text-secondary">
+              Keep every client detail in one table. Open deal count excludes won and lost deals.
+            </p>
           </div>
 
           {contactLimitReached ? <ContactLimitBanner /> : null}

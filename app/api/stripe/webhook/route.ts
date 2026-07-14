@@ -36,34 +36,57 @@ export async function POST(req: NextRequest) {
                     session.subscription as string
                 );
 
-                await supabaseAdmin
+                // Stripe API 2026-06-24.dahlia: current_period_end lives on
+                // the subscription item, not the subscription root.
+                const periodEnd = subscription.items.data[0]?.current_period_end;
+
+                const { error: updateError } = await supabaseAdmin
                     .from("profiles")
                     .update({
                         plan: "pro",
                         stripe_subscription_id: subscription.id,
                         subscription_status: "active",
-                        current_period_end: new Date((subscription as any).current_period_end * 1000).toISOString(),
+                        current_period_end: periodEnd
+                            ? new Date(periodEnd * 1000).toISOString()
+                            : null,
                     })
                     .eq("id", userId);
+
+                if (updateError) {
+                    console.error("[api/stripe/webhook] checkout.session.completed profile update failed", updateError);
+                }
                 break;
             }
             case "customer.subscription.updated": {
                 const subscription = event.data.object as Stripe.Subscription;
-                await supabaseAdmin
+                const updatedPeriodEnd = subscription.items.data[0]?.current_period_end;
+
+                const { error: updateError } = await supabaseAdmin
                     .from("profiles")
                     .update({
                         subscription_status: subscription.cancel_at_period_end ? "canceling" : "active",
-                        current_period_end: new Date((subscription as any).current_period_end * 1000).toISOString(),
+                        current_period_end: updatedPeriodEnd
+                            ? new Date(updatedPeriodEnd * 1000).toISOString()
+                            : null,
                     })
                     .eq("stripe_subscription_id", subscription.id);
+
+                if (updateError) {
+                    console.error("[api/stripe/webhook] customer.subscription.updated profile update failed", updateError);
+                }
                 break;
             }
             case "customer.subscription.deleted": {
                 const subscription = event.data.object as Stripe.Subscription;
-                await supabaseAdmin
+
+                const { error: updateError } = await supabaseAdmin
                     .from("profiles")
                     .update({ plan: "free", subscription_status: "canceled" })
                     .eq("stripe_subscription_id", subscription.id);
+
+                if (updateError) {
+                    console.error("[api/stripe/webhook] customer.subscription.deleted profile update failed", updateError);
+                }
                 break;
             }
         }

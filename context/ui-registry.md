@@ -354,11 +354,11 @@ Last updated: 2026-07-14
 | Border radius    | `rounded-xl` |
 | Text — primary   | `text-text-primary` |
 | Text — secondary | `text-text-muted`, `text-text-secondary`, `text-warning-foreground` |
-| Spacing          | `p-6`, `gap-6`, `gap-4`, `gap-2`, `px-4 py-2`, `px-2 py-0.5` |
-| Hover state      | `hover:bg-accent-dark` |
+| Spacing          | `p-6`, `gap-6`, `gap-4`, `gap-2`, `px-4 py-2`, `px-2 py-0.5`, `h-1.5` |
+| Hover state      | `hover:bg-accent-dark`, `hover:bg-surface-secondary` |
 | Shadow           | `shadow-sm` |
 | Accent usage     | `bg-accent`, `text-accent-foreground`, `bg-accent-dark`, `bg-success-light`, `text-success-foreground`, `bg-warning-light`, `text-warning-foreground`, `bg-surface-secondary`, `text-text-secondary`, `text-error` |
 
 **Pattern notes:**
-PlanCard is a client component — it owns the upgrade button's loading/error state and the fetch to `/api/stripe/checkout`. Badge uses the subscription status token set from ui-tokens.md exactly. No Stripe SDK calls here; all Stripe logic is in the API route.
+PlanCard is a client component with four props: `plan`, `subscriptionStatus`, `currentPeriodEnd`, `contactCount`. Owns loading/error state for both upgrade (`/api/stripe/checkout`) and manage (`/api/stripe/portal`) buttons — separate loading booleans, shared error display. Free plan shows a contact usage progress bar (`contactCount / 10`) using a token-colored `bg-accent` fill on a `bg-surface-secondary` track — no hardcoded values. Canceling badge text is `"Cancels on [date]"` (not "Pro — Canceling"). No Stripe SDK calls here; all Stripe logic is in API routes.
 

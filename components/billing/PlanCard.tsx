@@ -6,35 +6,21 @@ type Props = {
     plan: string;
     subscriptionStatus: string;
     currentPeriodEnd: string | null;
+    contactCount: number;
 };
 
-export function PlanCard({ plan, subscriptionStatus, currentPeriodEnd }: Props) {
-    const [loading, setLoading] = useState(false);
+export function PlanCard({
+    plan,
+    subscriptionStatus,
+    currentPeriodEnd,
+    contactCount,
+}: Props) {
+    const [upgradeLoading, setUpgradeLoading] = useState(false);
+    const [manageLoading, setManageLoading] = useState(false);
     const [error, setError] = useState("");
 
     const isPro = plan === "pro";
     const isCanceling = subscriptionStatus === "canceling";
-
-    async function handleUpgrade() {
-        setLoading(true);
-        setError("");
-        try {
-            const res = await fetch("/api/stripe/checkout", { method: "POST" });
-            const data: { success: boolean; url?: string; error?: string } =
-                await res.json();
-            if (!data.success || !data.url) {
-                setError(data.error ?? "Something went wrong. Please try again.");
-                setLoading(false);
-                return;
-            }
-            // No setLoading(false) here — browser navigates away immediately.
-            // Resetting state would flicker the button text before unload.
-            window.location.href = data.url;
-        } catch {
-            setError("Network error. Please try again.");
-            setLoading(false);
-        }
-    }
 
     function formatDate(iso: string): string {
         return new Date(iso).toLocaleDateString(undefined, {
@@ -55,9 +41,49 @@ export function PlanCard({ plan, subscriptionStatus, currentPeriodEnd }: Props) 
     }
 
     function statusLabel(): string {
-        if (isPro && isCanceling) return "Pro — Canceling";
+        if (isPro && isCanceling && currentPeriodEnd) {
+            return `Cancels on ${formatDate(currentPeriodEnd)}`;
+        }
         if (isPro) return "Pro";
         return "Starter (Free)";
+    }
+
+    async function handleUpgrade() {
+        setUpgradeLoading(true);
+        setError("");
+        try {
+            const res = await fetch("/api/stripe/checkout", { method: "POST" });
+            const data: { success: boolean; url?: string; error?: string } =
+                await res.json();
+            if (!data.success || !data.url) {
+                setError(data.error ?? "Something went wrong. Please try again.");
+                setUpgradeLoading(false);
+                return;
+            }
+            window.location.href = data.url;
+        } catch {
+            setError("Network error. Please try again.");
+            setUpgradeLoading(false);
+        }
+    }
+
+    async function handleManage() {
+        setManageLoading(true);
+        setError("");
+        try {
+            const res = await fetch("/api/stripe/portal", { method: "POST" });
+            const data: { success: boolean; url?: string; error?: string } =
+                await res.json();
+            if (!data.success || !data.url) {
+                setError(data.error ?? "Something went wrong. Please try again.");
+                setManageLoading(false);
+                return;
+            }
+            window.location.href = data.url;
+        } catch {
+            setError("Network error. Please try again.");
+            setManageLoading(false);
+        }
     }
 
     return (
@@ -81,6 +107,24 @@ export function PlanCard({ plan, subscriptionStatus, currentPeriodEnd }: Props) 
                 </span>
             </div>
 
+            {/* Free plan: contact usage meter */}
+            {!isPro && (
+                <div className="flex flex-col gap-2">
+                    <div className="flex items-center justify-between text-xs text-text-secondary">
+                        <span>Contact usage</span>
+                        <span className="font-medium text-text-primary">
+                            {contactCount} of 10 used
+                        </span>
+                    </div>
+                    <div className="h-1.5 w-full rounded-full bg-surface-secondary overflow-hidden">
+                        <div
+                            className="h-full rounded-full bg-accent transition-all"
+                            style={{ width: `${Math.min((contactCount / 10) * 100, 100)}%` }}
+                        />
+                    </div>
+                </div>
+            )}
+
             {/* Period end notice when canceling */}
             {isPro && isCanceling && currentPeriodEnd && (
                 <p className="text-sm text-warning-foreground">
@@ -95,21 +139,27 @@ export function PlanCard({ plan, subscriptionStatus, currentPeriodEnd }: Props) 
                 <div className="flex flex-col gap-2">
                     <button
                         onClick={handleUpgrade}
-                        disabled={loading}
+                        disabled={upgradeLoading}
                         className="w-fit rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-foreground hover:bg-accent-dark disabled:opacity-60"
                     >
-                        {loading ? "Redirecting…" : "Upgrade to Pro"}
+                        {upgradeLoading ? "Redirecting…" : "Upgrade to Pro"}
                     </button>
                     {error && <p className="text-xs text-error">{error}</p>}
                 </div>
             )}
 
-            {/* Pro feature list */}
-            {isPro && !isCanceling && (
-                <p className="text-sm text-text-secondary">
-                    To cancel or manage your subscription, use the Stripe billing portal
-                    (available in the next release).
-                </p>
+            {/* Pro: manage subscription */}
+            {isPro && (
+                <div className="flex flex-col gap-2">
+                    <button
+                        onClick={handleManage}
+                        disabled={manageLoading}
+                        className="w-fit rounded-md border border-border bg-surface px-4 py-2 text-sm font-medium text-text-primary hover:bg-surface-secondary disabled:opacity-60"
+                    >
+                        {manageLoading ? "Redirecting…" : "Manage Subscription"}
+                    </button>
+                    {error && <p className="text-xs text-error">{error}</p>}
+                </div>
             )}
         </div>
     );
