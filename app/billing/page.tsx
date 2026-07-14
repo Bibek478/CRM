@@ -42,8 +42,8 @@ export default async function BillingPage() {
 
   return (
     <>
-      <Navbar userEmail={user.email} />
-      <main className="mx-auto max-w-[1200px] px-6 py-6">
+      <Navbar userEmail={user.email} userName={user.user_metadata?.full_name ?? undefined} />
+      <main className="mx-auto max-w-[1200px] px-4 py-6 sm:px-6">
         <div className="flex flex-col gap-6">
           <h1 className="text-2xl font-semibold text-text-primary">Billing</h1>
 

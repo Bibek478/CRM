@@ -362,3 +362,18 @@ Last updated: 2026-07-14
 **Pattern notes:**
 PlanCard is a client component with four props: `plan`, `subscriptionStatus`, `currentPeriodEnd`, `contactCount`. Owns loading/error state for both upgrade (`/api/stripe/checkout`) and manage (`/api/stripe/portal`) buttons — separate loading booleans, shared error display. Free plan shows a contact usage progress bar (`contactCount / 10`) using a token-colored `bg-accent` fill on a `bg-surface-secondary` track — no hardcoded values. Canceling badge text is `"Cancels on [date]"` (not "Pro — Canceling"). No Stripe SDK calls here; all Stripe logic is in API routes.
 
+### ProfileMenu
+
+File: [components/layout/ProfileMenu.tsx](../components/layout/ProfileMenu.tsx)
+Last updated: 2026-07-14
+
+| Property         | Class |
+| ---------------- | ----- |
+| Avatar trigger   | `flex h-8 w-8 items-center justify-center rounded-full bg-accent-muted text-sm font-semibold text-accent transition hover:opacity-80` |
+| Dropdown panel   | `absolute right-0 top-10 z-50 w-56 rounded-xl border border-border bg-surface shadow-sm` |
+| Email row        | `px-4 py-3`, `truncate text-xs text-text-secondary` |
+| Divider          | `border-t border-border` |
+| Log out button   | `w-full rounded-lg px-3 py-2 text-left text-sm text-error transition hover:bg-surface-secondary` |
+
+**Pattern notes:**
+Avatar click toggles the dropdown; outside-click closes it via a `mousedown` listener. Email row is non-interactive (plain `<p>`). Log out calls `supabase.auth.signOut()` then `router.replace("/")` — same logic as the old `LogoutButton`. Dropdown is right-aligned to the avatar via `right-0`. Replaces the legacy email span + `LogoutButton` pair in the Navbar.

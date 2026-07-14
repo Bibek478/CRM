@@ -34,7 +34,7 @@ export function PipelineColumn({ stage, deals }: Props) {
     const label = STAGE_LABEL[stage] ?? stage;
 
     return (
-        <div className="flex min-w-[220px] flex-1 flex-col gap-3">
+        <div className="flex w-full flex-1 flex-col gap-3">
             <div className="flex items-center gap-2 px-1">
                 <span
                     className="h-2 w-2 rounded-full shrink-0"
@@ -46,9 +46,9 @@ export function PipelineColumn({ stage, deals }: Props) {
                 </span>
             </div>
 
-            <div className="flex flex-col gap-2 rounded-xl border border-border bg-surface-muted p-2 min-h-[120px]">
+            <div className="flex min-h-[120px] flex-col gap-3">
                 {deals.length === 0 ? (
-                    <div className="flex flex-1 items-center justify-center py-8">
+                    <div className="flex flex-1 items-center py-4">
                         <p className="text-xs text-text-muted">No deals in this stage</p>
                     </div>
                 ) : (

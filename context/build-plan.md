@@ -289,6 +289,37 @@ Any box that fails here is a bug, not a nice-to-have — this checklist
 
 ---
 
+## Phase 7 — Post-Launch Polish
+
+### 13 Profile Menu + Mobile Responsiveness
+
+Cosmetic pass after the core product is functionally complete. Replaces
+the raw email+logout in the navbar with a proper profile dropdown, and
+makes the app usable down to 375px width.
+
+**UI:**
+
+- Build `ProfileMenu` per its "Planned" entry in `ui-registry.md` —
+  circular avatar (initials), dropdown with email (non-interactive) + Log
+  out, replacing the current navbar right side
+- Apply the Mobile Responsiveness rules from `ui-rules.md` across: Navbar
+  (hamburger below 768px), Pipeline Board (horizontal scroll retained,
+  New Deal button collapses to icon-only below 480px), Contacts Table
+  (switches to stacked cards below 640px), and all forms/modals (full-screen
+  sheets below 640px)
+
+**Logic:**
+
+- None — this is UI-only, no new tables, actions, or routes
+
+**Test before moving on:** resize down to 375px and click through all 8
+pages (marketing, login, signup, dashboard, contacts list, contact detail,
+deal detail, billing) — nothing should overflow horizontally or become
+unusable. Confirm the profile dropdown opens/closes correctly and logout
+still works from inside it.
+
+---
+
 ## Feature Count
 
 | Phase                      | Features |
@@ -299,4 +330,5 @@ Any box that fails here is a bug, not a nice-to-have — this checklist
 | Phase 4 — Deals & Pipeline              | 2          |
 | Phase 5 — Stripe & Billing                 | 3          |
 | Phase 6 — Polish & Submission Check           | 1          |
-| **Total**                                        | **12**     |
+| Phase 7 — Post-Launch Polish           | 1          |
+| **Total**                                        | **13**     |

@@ -52,8 +52,8 @@ export default async function DashboardPage() {
 
   return (
     <>
-      <Navbar userEmail={user.email} />
-      <main className="relative min-h-screen px-6 py-10">
+      <Navbar userEmail={user.email} userName={user.user_metadata?.full_name ?? undefined} />
+      <main className="relative min-h-screen px-4 py-8 sm:px-6 sm:py-10">
         <div className="mx-auto w-full max-w-[1200px]">
           <PipelineBoard deals={deals} contacts={contacts} />
         </div>

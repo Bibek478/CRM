@@ -96,8 +96,8 @@ export default async function ContactDetailPage({ params }: PageProps) {
 
   return (
     <>
-      <Navbar userEmail={user.email} />
-      <main className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-6 py-10">
+      <Navbar userEmail={user.email} userName={user.user_metadata?.full_name ?? undefined} />
+      <main className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-4 py-8 sm:px-6 sm:py-10">
         <section className="flex flex-col gap-6 rounded-xl border border-border bg-surface p-6 shadow-sm">
           <div className="flex flex-col gap-2">
             <h1 className="text-2xl font-semibold text-text-primary">{contact.name}</h1>

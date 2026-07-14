@@ -46,8 +46,8 @@ export function ContactFormPanel({ disabled }: Props) {
       </div>
 
       {open ? (
-        <div className="absolute inset-0 z-20 flex items-start justify-center bg-overlay/40 px-6 py-10">
-          <div className="w-full max-w-2xl rounded-xl border border-border bg-surface p-6 shadow-sm">
+        <div className="fixed inset-0 z-50 flex items-end justify-center bg-overlay/40 sm:items-start sm:px-6 sm:py-10">
+          <div className="w-full max-w-2xl rounded-t-xl border border-border bg-surface p-6 shadow-sm sm:rounded-xl">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div className="flex flex-col gap-1">
                 <h3 className="text-base font-semibold text-text-primary">New contact</h3>

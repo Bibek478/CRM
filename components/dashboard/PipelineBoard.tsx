@@ -53,14 +53,17 @@ export function PipelineBoard({ deals, contacts }: Props) {
             <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-semibold text-text-primary">Pipeline</h1>
                 <button
+                    id="pipeline-new-deal"
                     onClick={() => setShowModal(true)}
                     className="rounded-md bg-accent px-4 py-2 text-sm font-medium text-accent-foreground hover:bg-accent-dark transition-colors"
+                    aria-label="New Deal"
                 >
-                    New Deal
+                    <span className="hidden min-[480px]:inline">New Deal</span>
+                    <span className="inline min-[480px]:hidden" aria-hidden="true">+</span>
                 </button>
             </div>
 
-            <div className="flex gap-4 overflow-x-auto pb-4">
+            <div className="flex flex-col gap-8 lg:flex-row lg:gap-4 lg:pb-4">
                 {STAGES.map((stage) => (
                     <PipelineColumn
                         key={stage}
@@ -72,13 +75,13 @@ export function PipelineBoard({ deals, contacts }: Props) {
 
             {showModal && (
                 <div
-                    className="absolute inset-0 z-20 flex items-start justify-center bg-overlay/40 px-6 py-10"
+                    className="fixed inset-0 z-50 flex items-end justify-center bg-overlay/40 sm:items-start sm:px-6 sm:py-10"
                     onClick={(e) => {
                         if (e.target === e.currentTarget) setShowModal(false);
                     }}
                 >
                     <div
-                        className="w-full max-w-lg rounded-xl border border-border bg-surface p-6 shadow-sm flex flex-col gap-4"
+                        className="w-full max-w-lg rounded-t-xl border border-border bg-surface p-6 shadow-sm flex flex-col gap-4 sm:rounded-xl"
                     >
                         <div className="flex items-center justify-between">
                             <h2 className="text-base font-semibold text-text-primary">

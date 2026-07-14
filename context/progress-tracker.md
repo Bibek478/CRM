@@ -8,8 +8,8 @@ next.
 
 ## Current Status
 
-**Phase:** Phase 6 - Polish & Submission Check
-**Last completed:** Feature 12 Full Walkthrough + Fix List
+**Phase:** Phase 7 - Post-Launch Polish
+**Last completed:** Feature 13 Profile Menu + Mobile Responsiveness
 **Next:** Submission.
 
 ---
@@ -47,6 +47,10 @@ next.
 - [x] 12 Full Walkthrough + Fix List
 
 ---
+
+### Phase 7 — Post-Launch Polish
+
+- [x] 13 Profile Menu + Mobile Responsiveness
 
 ## Decisions Made During Build
 
@@ -86,4 +90,4 @@ next.
 - Feature 08 implemented locally: `/deals/[id]` renders deal name/value/stage (editable via `updateDeal`), linked contact card linking back to `/contacts/[id]`, notes section via `NoteInput`/`NotesList` with `deal_id`. Delete button confirms, calls `deleteDeal`, redirects to `/dashboard`. New components: `DealDetailForm`, `DeleteDealButton` in `components/deals/`.
 - Feature 09 implemented locally: `stripe@22.3.1` installed with `apiVersion: "2026-06-24.dahlia"`. `lib/stripe.ts` created. `POST /api/stripe/checkout` creates Stripe Customer (service role write for `stripe_customer_id` — sanctioned exception) then creates a Checkout Session. `app/billing/page.tsx` refactored from placeholder to real server component fetching `profiles.plan/subscription_status/current_period_end`. `components/billing/PlanCard.tsx` shows plan badge and Upgrade button. `.env.local` extended with `STRIPE_SECRET_KEY`, `STRIPE_PRO_PRICE_ID`, `NEXT_PUBLIC_SITE_URL` placeholders — user must fill in real Stripe test-mode values before testing.
 - Feature 12 walkthrough pass complete. Fixes applied: (1) Removed debug "Feature 05 Contacts" badge from `app/contacts/page.tsx`. (2) Removed debug "Feature 06 Contact Detail" badge from `app/contacts/[id]/page.tsx`. (3) Added the `Navbar` component to the `/billing` page to restore expected navigation across all product pages, resolving the cosmetic/navigation issue. Note: `proxy.ts` + `lib/supabase-proxy.ts` were already present and correctly handling session-cookie refresh and route protection for all four protected prefixes — this is Next.js 16's `proxy` convention, which replaces the standard `middleware.ts` pattern. A `middleware.ts` was briefly created in error and immediately deleted after the dev-server conflict was caught in the post-feature review.
-
+- Feature 13 implemented: `ProfileMenu` component at `components/layout/ProfileMenu.tsx` — 32px circular avatar (initials, `bg-accent-muted`/`text-accent`), click-toggled dropdown with email row + divider + Log out in `text-error`, outside-click closes. `Navbar` rewritten: desktop nav links hidden below 768px behind animated hamburger, mobile full-width dropdown panel with same active/inactive rules, profile avatar always visible. Mobile responsiveness applied: page padding `px-4 py-8 sm:px-6 sm:py-10` on all product pages; `ContactsTable` stacked card layout below 640px; Add Contact and New Deal modals become bottom sheets below 640px (`rounded-t-xl`, `items-end`); New Deal button collapses to icon-only (`+`) below 480px.

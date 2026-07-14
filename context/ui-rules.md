@@ -42,7 +42,67 @@ Three nav items: Dashboard, Contacts, Billing.
 - Inactive item: `text-text-secondary`, font-weight 500, 14px
 - No underline — active state is color change only
 - Always white background (`bg-surface`), full viewport width
-- Right side: user email/avatar + logout, not part of the three nav items
+- Right side: a single Profile trigger — a circular avatar badge (initials
+  from the user's email, e.g. "B" for biswassubhajit248@gmail.com),
+  32px diameter, `bg-accent-muted` background, `text-accent` text, 14px
+  font-weight 600. Not part of the three nav items.
+- Clicking the avatar opens a dropdown (shadcn `DropdownMenu`), right-aligned
+  to the avatar:
+  - Row 1: user's full email, `text-text-secondary`, 12px, not clickable
+  - Divider
+  - Row 2: "Log out" — `text-error`, 14px, click triggers logout
+- The email is never shown in the navbar itself, only inside the dropdown
+  — the collapsed state on the navbar is the avatar alone
+
+---
+
+## Mobile Responsiveness
+
+The product is desktop-first (a CRM is primarily a desk tool) but must not
+break on mobile — every page needs to remain usable, not necessarily
+optimized, down to 375px width.
+
+**Navbar:**
+
+- Below 768px, the three nav items (Dashboard, Contacts, Billing) collapse
+  behind a hamburger menu icon, left of the logo becomes just the logo,
+  hamburger on the right next to the profile avatar
+- Hamburger opens a full-width dropdown panel below the navbar, one nav
+  item per row, same active/inactive color rules as the desktop nav
+- Profile avatar stays visible at all breakpoints — never hidden inside
+  the hamburger menu
+
+**Pipeline Board:**
+
+- Below 768px, the 5 columns do not stack vertically — they remain
+  horizontally scrollable (`overflow-x-auto`), each column keeps a fixed
+  minimum width (~260px) so cards stay readable, matching the existing
+  desktop card layout rather than introducing a second mobile-only layout
+- "New Deal" button remains top-right, shrinks to icon-only (+ icon, no
+  label text) below 480px to avoid crowding the page heading
+
+**Contacts Table:**
+
+- Below 640px, the table does not scroll horizontally — it switches to a
+  stacked card layout: one card per contact, name as the card title
+  (body text weight), remaining fields (email, company, phone) as
+  label/value pairs in secondary/muted text below it
+- This is the one place a mobile-only layout is allowed, since a 5-column
+  table is unreadable at phone width no matter how it's compressed
+
+**Forms (Add Contact, New Deal, Contact/Deal Detail):**
+
+- Full width on mobile, fields stack vertically at all breakpoints (they
+  already do on desktop, so no change needed there)
+- Modal/dialog forms become full-screen sheets below 640px rather than
+  centered modals with visible page background around them
+
+**General rule:**
+
+- Page padding drops from 24px to 16px below 640px
+- Never use a fixed pixel width on any container — always responsive
+  (`max-w-*` + `w-full`), so this rule applies retroactively to anything
+  already built with a fixed width
 
 ---
 
