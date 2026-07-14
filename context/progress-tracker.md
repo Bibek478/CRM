@@ -8,9 +8,9 @@ next.
 
 ## Current Status
 
-**Phase:** Phase 4 - Deals & Pipeline
-**Last completed:** Feature 07 pipeline board code complete
-**Next:** Build Feature 08 deal detail after validating pipeline board on deployed URL.
+**Phase:** Phase 5 - Stripe & Billing
+**Last completed:** Feature 10 Stripe Webhook — Subscription State
+**Next:** Feature 11 Billing Page.
 
 ---
 
@@ -34,12 +34,12 @@ next.
 ### Phase 4 - Deals & Pipeline
 
 - [x] 07 Pipeline Board (Dashboard)
-- [ ] 08 Deal Detail - Edit, Notes, Delete
+- [x] 08 Deal Detail - Edit, Notes, Delete
 
 ### Phase 5 - Stripe & Billing
 
-- [ ] 09 Stripe Setup + Checkout Flow
-- [ ] 10 Stripe Webhook - Subscription State
+- [x] 09 Stripe Setup + Checkout Flow
+- [x] 10 Stripe Webhook - Subscription State
 - [ ] 11 Billing Page
 
 ### Phase 6 - Polish & Submission Check
@@ -83,10 +83,6 @@ next.
   `/deals/*`, `/billing` and redirects unauth to `/login`. `components/layout/Navbar.tsx`
   displays nav items with active state, user email, and LogoutButton. Session
   persistence test pending until Feature 01 deployment completes.
-- Feature 07 implemented locally: `/dashboard` is now a 5-column pipeline board.
-  `PipelineBoard` client component handles the New Deal modal (contact picker, name,
-  value, stage). `DealCard` shows name, contact, value, and a stage `<select>` that
-  auto-submits `updateDealStage`. `PipelineColumn` renders column header with stage
-  dot, count badge, and empty state. `actions/deals.ts` includes `createDeal`,
-  `updateDealStage`, plus `updateDeal`/`deleteDeal` stubs ready for Feature 08.
+- Feature 08 implemented locally: `/deals/[id]` renders deal name/value/stage (editable via `updateDeal`), linked contact card linking back to `/contacts/[id]`, notes section via `NoteInput`/`NotesList` with `deal_id`. Delete button confirms, calls `deleteDeal`, redirects to `/dashboard`. New components: `DealDetailForm`, `DeleteDealButton` in `components/deals/`.
+- Feature 09 implemented locally: `stripe@22.3.1` installed with `apiVersion: "2026-06-24.dahlia"`. `lib/stripe.ts` created. `POST /api/stripe/checkout` creates Stripe Customer (service role write for `stripe_customer_id` — sanctioned exception) then creates a Checkout Session. `app/billing/page.tsx` refactored from placeholder to real server component fetching `profiles.plan/subscription_status/current_period_end`. `components/billing/PlanCard.tsx` shows plan badge and Upgrade button. `.env.local` extended with `STRIPE_SECRET_KEY`, `STRIPE_PRO_PRICE_ID`, `NEXT_PUBLIC_SITE_URL` placeholders — user must fill in real Stripe test-mode values before testing.
 

@@ -301,3 +301,64 @@ Last updated: 2026-07-14
 
 **Pattern notes:**
 New Deal modal uses the same overlay pattern as ContactFormPanel (`bg-overlay/40`, click-outside to close). Board uses `overflow-x-auto` with `min-w-[220px]` columns so it scrolls horizontally on narrow viewports rather than stacking. All five stage columns always render; empty state lives inside each column.
+
+### DealDetailForm
+
+File: [components/deals/DealDetailForm.tsx](../components/deals/DealDetailForm.tsx)
+Last updated: 2026-07-14
+
+| Property         | Class |
+| ---------------- | ----- |
+| Background       | `none` |
+| Border           | `border border-border` (inputs/select) |
+| Border radius    | `rounded-md` (inputs, select, button) |
+| Text — primary   | `text-text-primary`, `text-sm font-medium` (labels), `text-xs text-error` (required mark) |
+| Text — secondary | `text-xs text-success-foreground` (save confirmation), `text-xs text-error` (error) |
+| Spacing          | `flex flex-col gap-4` (form), `flex flex-col gap-2` (field), `grid gap-4` (value+stage row), `px-3 py-2` (inputs), `px-4 py-2` (button) |
+| Hover state      | `hover:bg-accent-dark` (button) |
+| Shadow           | `none` |
+| Accent usage     | `bg-accent`, `text-accent-foreground`, `focus:ring-accent`, `focus:border-accent`, `text-success-foreground`, `text-error` |
+
+**Pattern notes:**
+Mirrors ContactDetailForm structure. No `useEffect` — server revalidation keeps form in sync after save. Controlled `<select>` for stage using VALID_STAGES constant — same guard as DealCard on pipeline board. Single `updateDeal` action handles name + value + stage together. Inline save confirmation uses `text-success-foreground` (not `text-success`) to match token convention.
+
+### DeleteDealButton
+
+File: [components/deals/DeleteDealButton.tsx](../components/deals/DeleteDealButton.tsx)
+Last updated: 2026-07-14
+
+| Property         | Class |
+| ---------------- | ----- |
+| Background       | `none` |
+| Border           | `none` |
+| Border radius    | `rounded-md` |
+| Text — primary   | `text-error-foreground` |
+| Text — secondary | `text-xs text-error` (error message below button) |
+| Spacing          | `px-4 py-2`, `mt-2` (error message) |
+| Hover state      | `hover:opacity-90` |
+| Shadow           | `none` |
+| Accent usage     | `bg-error`, `text-error-foreground` |
+
+**Pattern notes:**
+Mirrors DeleteContactButton exactly — 2-space indent, `window.confirm` before submit, `useActionState(deleteDeal)`, `router.replace("/dashboard")` on success. Error message rendered below button with `mt-2 text-xs text-error`. Future destructive deal actions must match this pattern.
+
+### PlanCard
+
+File: [components/billing/PlanCard.tsx](../components/billing/PlanCard.tsx)
+Last updated: 2026-07-14
+
+| Property         | Class |
+| ---------------- | ----- |
+| Background       | `rounded-xl border border-border bg-surface p-6 shadow-sm` |
+| Border           | `border border-border` |
+| Border radius    | `rounded-xl` |
+| Text — primary   | `text-text-primary` |
+| Text — secondary | `text-text-muted`, `text-text-secondary`, `text-warning-foreground` |
+| Spacing          | `p-6`, `gap-6`, `gap-4`, `gap-2`, `px-4 py-2`, `px-2 py-0.5` |
+| Hover state      | `hover:bg-accent-dark` |
+| Shadow           | `shadow-sm` |
+| Accent usage     | `bg-accent`, `text-accent-foreground`, `bg-accent-dark`, `bg-success-light`, `text-success-foreground`, `bg-warning-light`, `text-warning-foreground`, `bg-surface-secondary`, `text-text-secondary`, `text-error` |
+
+**Pattern notes:**
+PlanCard is a client component — it owns the upgrade button's loading/error state and the fetch to `/api/stripe/checkout`. Badge uses the subscription status token set from ui-tokens.md exactly. No Stripe SDK calls here; all Stripe logic is in the API route.
+
