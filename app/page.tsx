@@ -4,6 +4,7 @@ import { Features } from "@/components/marketing/Features";
 import { Footer } from "@/components/marketing/Footer";
 import { Hero } from "@/components/marketing/Hero";
 import { PricingTable } from "@/components/marketing/PricingTable";
+import { Testimonials } from "@/components/marketing/Testimonials";
 import { createSupabaseServer } from "@/lib/supabase-server";
 
 export default async function HomePage() {
@@ -44,12 +45,14 @@ export default async function HomePage() {
         </header>
       </div>
 
-      <div className="mx-auto flex w-full max-w-300 flex-col gap-8 px-6 py-6">
+      <div className="mx-auto flex w-full max-w-300 flex-col gap-8 px-6 py-6 font-sans">
         <Hero />
         <Features />
+        <Testimonials />
         <PricingTable />
         <Footer />
       </div>
     </main>
   );
 }
+

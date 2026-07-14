@@ -25,22 +25,42 @@ file path, and exact classes used.
 ### Hero
 
 File: [components/marketing/Hero.tsx](../components/marketing/Hero.tsx)
-Last updated: 2026-07-13
+Last updated: 2026-07-14
 
 | Property         | Class |
 | ---------------- | ----- |
-| Background       | `relative overflow-hidden rounded-xl border border-border bg-surface p-6 shadow-sm` |
+| Background       | `relative overflow-hidden rounded-xl border border-border bg-surface p-6 shadow-sm`, `bg-surface-secondary` (preview image frame), `bg-surface` (image block container) |
 | Border           | `border border-border` |
-| Border radius    | `rounded-xl` |
+| Border radius    | `rounded-xl` (hero & image frame), `rounded-lg` (inner preview image) |
 | Text — primary   | `text-text-primary` |
 | Text — secondary | `text-text-secondary` |
-| Spacing          | `p-6`, `lg:p-8`, `gap-8`, `gap-5`, `gap-4`, `gap-3`, `px-4 py-2`, `px-3 py-1`, `p-4` |
+| Spacing          | `p-6`, `lg:p-8`, `gap-8`, `gap-5`, `gap-4`, `gap-3`, `px-4 py-2`, `p-1.5` |
 | Hover state      | `hover:bg-surface-secondary`, `hover:bg-accent-dark` |
 | Shadow           | `shadow-sm` |
-| Accent usage     | `bg-accent-muted`, `text-accent-dark`, `bg-accent`, `text-accent-foreground`, `bg-success-light`, `text-success-foreground` |
+| Accent usage     | `bg-accent-muted`, `text-accent-dark`, `bg-accent`, `text-accent-foreground` |
 
 **Pattern notes:**
-Hero uses soft accent wash only in background shapes, not card surfaces. Primary CTA stays solid accent, secondary CTA stays neutral bordered. Inner callout cards reuse same white card language with smaller radius only for the content stack.
+Hero uses soft accent wash in background shapes. Left column holds key copywriting and CTAs. Right column is styled as a nested layout: `rounded-xl border border-border bg-surface-secondary p-1.5 shadow-sm` holding a Next.js aspect-ratio optimized preview `<Image />` for premium visuals.
+
+### Testimonials
+
+File: [components/marketing/Testimonials.tsx](../components/marketing/Testimonials.tsx)
+Last updated: 2026-07-14
+
+| Property         | Class |
+| ---------------- | ----- |
+| Background       | `bg-surface` (testimonial cards) |
+| Border           | `border border-border` (cards), `border-t border-border` (divider) |
+| Border radius    | `rounded-xl` (cards) |
+| Text — primary   | `text-text-primary` (titles, reviewer names) |
+| Text — secondary | `text-text-secondary` (subtitles, quote, reviewer roles) |
+| Spacing          | `gap-4`, `gap-3`, `gap-2`, `gap-1`, `p-6`, `mt-2`, `pt-4` |
+| Hover state      | `none` |
+| Shadow           | `shadow-sm` (cards) |
+| Accent usage     | `fill-accent`, `text-accent` (star ratings) |
+
+**Pattern notes:**
+Testimonials section is structured as a grid containing three client testimonial cards. Cards follow the same white cards styling as Feature cards. The rating stars are styled using Lucide `Star` with accent-based color fills. Client info footer maintains a minimal layout focusing purely on name and role sans avatars.
 
 ### Features
 
@@ -140,7 +160,7 @@ Last updated: 2026-07-13
 | Accent usage     | `none` |
 
 **Pattern notes:**
-Contacts table follows the project table pattern: white surface, border between rows, uppercase header, hover row highlight, and clickable rows. Future data tables should match this unless a different table style is explicitly needed.
+Contacts table follows the project table pattern: white surface, border between rows, uppercase header, hover row highlight, and clickable rows. For viewports < 640px, the table is hidden (`sm:block`) and replaced by a stacked flex-col of click-target cards for responsive friendliness.
 
 ### ContactLimitBanner
 
@@ -269,18 +289,18 @@ Last updated: 2026-07-14
 
 | Property         | Class |
 | ---------------- | ----- |
-| Background       | `bg-surface-muted` |
-| Border           | `border border-border` |
-| Border radius    | `rounded-xl` |
+| Background       | `none` |
+| Border           | `none` |
+| Border radius    | `none` |
 | Text — primary   | `text-text-primary` |
 | Text — secondary | `text-text-secondary`, `text-text-muted` |
-| Spacing          | `gap-3`, `gap-2`, `p-2`, `px-1`, `px-2 py-0.5`, `py-8` |
+| Spacing          | `flex flex-col gap-3`, `px-1`, `flex-1`, `w-full` |
 | Hover state      | none |
 | Shadow           | none |
 | Accent usage     | none |
 
 **Pattern notes:**
-Stage dot color set via `style={{ backgroundColor: "var(--color-...)" }}` — never dynamic Tailwind bg classes. Deal count badge uses `bg-surface-secondary`. Column is a muted background container. Empty state is a centred `py-8` message inside the column body.
+Stage dot color set via `style={{ backgroundColor: "var(--color-...)" }}` — never dynamic Tailwind bg classes. Deal count badge uses `bg-surface-secondary`. Column container has no background box or border, just a vertical flex stack of cards. Empty state is left-aligned text with `py-4`.
 
 ### PipelineBoard
 
@@ -289,18 +309,18 @@ Last updated: 2026-07-14
 
 | Property         | Class |
 | ---------------- | ----- |
-| Background       | `bg-surface` (modal) |
+| Background       | `bg-surface` (modal), `bg-overlay/40` (overlay) |
 | Border           | `border border-border` |
-| Border radius    | `rounded-xl` |
+| Border radius    | `rounded-xl`, `rounded-t-xl` |
 | Text — primary   | `text-text-primary` |
 | Text — secondary | `text-text-muted` |
-| Spacing          | `gap-6`, `gap-4`, `gap-3`, `gap-2`, `p-6`, `px-4 py-2`, `px-3 py-2`, `py-10`, `pb-4`, `pt-2` |
+| Spacing          | `gap-6`, `gap-4`, `gap-3`, `gap-8`, `p-6`, `px-4 py-2`, `pb-4` |
 | Hover state      | `hover:bg-accent-dark`, `hover:bg-surface-secondary`, `hover:text-text-primary` |
 | Shadow           | `shadow-sm` |
 | Accent usage     | `bg-accent`, `text-accent-foreground`, `bg-accent-dark`, `focus:ring-accent`, `text-accent` |
 
 **Pattern notes:**
-New Deal modal uses the same overlay pattern as ContactFormPanel (`bg-overlay/40`, click-outside to close). Board uses `overflow-x-auto` with `min-w-[220px]` columns so it scrolls horizontally on narrow viewports rather than stacking. All five stage columns always render; empty state lives inside each column.
+New Deal modal uses a full-screen bottom sheet on mobile (`fixed inset-0 z-50 flex items-end`) and a centered panel on `sm:`. Board stacks columns vertically on mobile (`flex-col`) and distributes as exact `flex-1` columns horizontally on large screens (`lg:flex-row`) without horizontal scrollbars, matching fullscreen width.
 
 ### DealDetailForm
 
@@ -362,6 +382,26 @@ Last updated: 2026-07-14
 **Pattern notes:**
 PlanCard is a client component with four props: `plan`, `subscriptionStatus`, `currentPeriodEnd`, `contactCount`. Owns loading/error state for both upgrade (`/api/stripe/checkout`) and manage (`/api/stripe/portal`) buttons — separate loading booleans, shared error display. Free plan shows a contact usage progress bar (`contactCount / 10`) using a token-colored `bg-accent` fill on a `bg-surface-secondary` track — no hardcoded values. Canceling badge text is `"Cancels on [date]"` (not "Pro — Canceling"). No Stripe SDK calls here; all Stripe logic is in API routes.
 
+### Navbar
+
+File: [components/layout/Navbar.tsx](../components/layout/Navbar.tsx)
+Last updated: 2026-07-14
+
+| Property         | Class |
+| ---------------- | ----- |
+| Background       | `bg-surface` |
+| Border           | `border-b border-border` (desktop), `border-t border-border` (mobile menu) |
+| Height           | `h-16` |
+| Text — primary   | `text-text-primary` |
+| Text — secondary | `text-text-secondary` |
+| Spacing          | `px-4 sm:px-6`, `gap-8`, `gap-6`, `gap-3`, `px-4 py-3` |
+| Hover state      | `hover:text-text-primary`, `hover:bg-surface-secondary` |
+| Mobile menu      | `md:hidden`, animated `transition-transform` |
+| Accent usage     | `text-accent` (active nav link) |
+
+**Pattern notes:**
+Fixed 64px height (`h-16`). Uses a standard flex row up to bounded `max-w-5xl`. Desktop nav links show active state via `text-accent`. Hamburger menu closes via `useEffect` on pathname change (fixing browser Back navigation). Displays user's short name side-by-side with `<ProfileMenu />`.
+
 ### ProfileMenu
 
 File: [components/layout/ProfileMenu.tsx](../components/layout/ProfileMenu.tsx)
@@ -369,11 +409,11 @@ Last updated: 2026-07-14
 
 | Property         | Class |
 | ---------------- | ----- |
-| Avatar trigger   | `flex h-8 w-8 items-center justify-center rounded-full bg-accent-muted text-sm font-semibold text-accent transition hover:opacity-80` |
+| Avatar trigger   | `flex h-9 w-9 items-center justify-center rounded-full bg-accent-muted text-base font-bold text-accent transition hover:opacity-80` |
 | Dropdown panel   | `absolute right-0 top-10 z-50 w-56 rounded-xl border border-border bg-surface shadow-sm` |
 | Email row        | `px-4 py-3`, `truncate text-xs text-text-secondary` |
 | Divider          | `border-t border-border` |
-| Log out button   | `w-full rounded-lg px-3 py-2 text-left text-sm text-error transition hover:bg-surface-secondary` |
+| Log out button   | `w-full rounded-md px-3 py-2 text-left text-sm text-error transition hover:bg-surface-secondary disabled:cursor-not-allowed disabled:opacity-70` |
 
 **Pattern notes:**
-Avatar click toggles the dropdown; outside-click closes it via a `mousedown` listener. Email row is non-interactive (plain `<p>`). Log out calls `supabase.auth.signOut()` then `router.replace("/")` — same logic as the old `LogoutButton`. Dropdown is right-aligned to the avatar via `right-0`. Replaces the legacy email span + `LogoutButton` pair in the Navbar.
+Avatar click toggles the dropdown; outside-click closes it via a `mousedown` listener. Avatar initial prioritizes `userName` prop over email. Log out uses `rounded-md` and shows inline error messages instead of silently failing on exception. Dropdown is right-aligned to the avatar via `right-0`.

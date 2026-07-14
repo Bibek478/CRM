@@ -8,8 +8,8 @@ next.
 
 ## Current Status
 
-**Phase:** Phase 7 - Post-Launch Polish
-**Last completed:** Feature 13 Profile Menu + Mobile Responsiveness
+**Phase:** Phase 8 - Landing Page Upgrades
+**Last completed:** Feature 14 Landing Page Modernization
 **Next:** Submission.
 
 ---
@@ -51,6 +51,10 @@ next.
 ### Phase 7 — Post-Launch Polish
 
 - [x] 13 Profile Menu + Mobile Responsiveness
+
+### Phase 8 — Landing Page Upgrades
+
+- [x] 14 Landing Page Modernization
 
 ## Decisions Made During Build
 
