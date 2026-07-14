@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createSupabaseServer } from "@/lib/supabase-server";
 import { PlanCard } from "@/components/billing/PlanCard";
+import { Navbar } from "@/components/layout/Navbar";
 
 export const metadata = {
   title: "Billing — RB CRM",
@@ -40,17 +41,20 @@ export default async function BillingPage() {
   const contactCount = countResult.count ?? 0;
 
   return (
-    <main className="mx-auto max-w-[1200px] px-6 py-6">
-      <div className="flex flex-col gap-6">
-        <h1 className="text-2xl font-semibold text-text-primary">Billing</h1>
+    <>
+      <Navbar userEmail={user.email} />
+      <main className="mx-auto max-w-[1200px] px-6 py-6">
+        <div className="flex flex-col gap-6">
+          <h1 className="text-2xl font-semibold text-text-primary">Billing</h1>
 
-        <PlanCard
-          plan={profile.plan ?? "free"}
-          subscriptionStatus={profile.subscription_status ?? "none"}
-          currentPeriodEnd={profile.current_period_end ?? null}
-          contactCount={contactCount}
-        />
-      </div>
-    </main>
+          <PlanCard
+            plan={profile.plan ?? "free"}
+            subscriptionStatus={profile.subscription_status ?? "none"}
+            currentPeriodEnd={profile.current_period_end ?? null}
+            contactCount={contactCount}
+          />
+        </div>
+      </main>
+    </>
   );
 }
